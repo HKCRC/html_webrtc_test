@@ -7,7 +7,7 @@ const streams = {
     source: "rtsp://admin:crcHK3130@192.168.31.8:554/Streaming/channels/201",
     whepUrl: "http://localhost:8889/mainUrlDown/whep",
   },
-  car_down: {
+  carDownUrl: {
     source: "rtsp://admin:crcHK3130@192.168.31.238:554/Streaming/channels/401",
     whepUrl: "http://localhost:8889/carDownUrl/whep"
   },
