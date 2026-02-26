@@ -15,7 +15,7 @@ def check_and_start_mediamtx():
         result = subprocess.run(['pgrep', 'mediamtx'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         if result.returncode != 0:
             print('MediaMTX is not running, starting it...')
-            proc = subprocess.Popen(['/home/hkcrc/mediamtx'])  # Update this path to the correct location of mediamtx
+            proc = subprocess.Popen(['/home/craner/mediaMtx/mediamtx'])  # Update this path to the correct location of mediamtx
             time.sleep(2)  # Wait for a moment to ensure it starts
             print('MediaMTX started successfully.')
             return proc, True
