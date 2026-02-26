@@ -1,46 +1,35 @@
 const streams = {
-  mainUrlUp: {
-    source: "rtsp://admin:crcHK3130@192.168.31.8:554/Streaming/channels/201",
-    whepUrl: "http://localhost:8889/mainUrlUp/whep",
+  main_up: {
+    whepUrl: "http://localhost:8889/testfile/whep",
   },
-  mainUrlDown: {
-    source: "rtsp://admin:crcHK3130@192.168.31.8:554/Streaming/channels/201",
+  main_down: {
     whepUrl: "http://localhost:8889/mainUrlDown/whep",
   },
-  carDownUrl: {
-    source: "rtsp://admin:crcHK3130@192.168.31.238:554/Streaming/channels/401",
+  car_down: {
     whepUrl: "http://localhost:8889/carDownUrl/whep"
   },
-  left1Url: {
-    source: "rtsp://admin:crcHK3130@192.168.31.238:554/Streaming/channels/501",
+  left1: {
     whepUrl: "http://localhost:8889/left1Url/whep",
   },
-  left2Url: {
-    source: "rtsp://admin:crcHK3130@192.168.31.238:554/Streaming/channels/501",
+  left2: {
     whepUrl: "http://localhost:8889/left2Url/whep",
   },
-  left3Url: {
-    source: "rtsp://admin:crcHK3130@192.168.31.238:554/Streaming/channels/601",
+  left3: {
     whepUrl: "http://localhost:8889/left3Url/whep",
   },
-  centerUrl: {
-    source: "rtsp://admin:crcHK3130@192.168.31.238:554/Streaming/channels/501",
+  center: {
     whepUrl: "http://localhost:8889/centerUrl/whep",
   },
-  centerLRUrl: {
-    source: "rtsp://admin:crcHK3130@192.168.31.238:554/Streaming/channels/501",
+  center_lr: {
     whepUrl: "http://localhost:8889/centerLRUrl/whep",
   },
-  right1Url: {
-    source: "rtsp://admin:crcHK3130@192.168.31.238:554/Streaming/channels/101",
+  right1: {
     whepUrl: "http://localhost:8889/right1Url/whep",
   },
-  right2Url: {
-    source: "rtsp://admin:crcHK3130@192.168.31.238:554/Streaming/channels/802",
+  right2: {
     whepUrl: "http://localhost:8889/right2Url/whep",
   },
-  right3Url: {
-    source: "rtsp://admin:crcHK3130@192.168.31.238:554/Streaming/channels/101",
+  right3: {
     whepUrl: "http://localhost:8889/right3Url/whep",
   },
 };
@@ -109,7 +98,7 @@ const pc = new RTCPeerConnection({
 
   const offer = await pc.createOffer();
   await pc.setLocalDescription(offer);
-  await waitIceGatheringComplete(pc);
+  // 不等待 ICE gathering 完成，立即发送 offer 以加快连接速度
 
   const response = await fetch(url, {
     method: "POST",
@@ -154,13 +143,16 @@ const attachStream = async (panel, cfg) => {
 };
 
 const initPanels = () => {
+  // 并行加载所有视频流以加快整体加载速度
+  const promises = [];
   document.querySelectorAll(".panel[data-stream]").forEach((panel) => {
     const key = panel.dataset.stream;
     const cfg = streams[key];
     if (cfg) {
-      attachStream(panel, cfg);
+      promises.push(attachStream(panel, cfg));
     }
   });
+  return Promise.all(promises);
 };
 
 applyScale();
