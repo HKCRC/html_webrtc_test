@@ -166,3 +166,39 @@ const initPanels = () => {
 applyScale();
 initPanels();
 window.addEventListener("resize", applyScale);
+
+const http = require('http');
+const port = 3000;
+
+const requestHandler = (request, response) => {
+    response.end('Hello, World!');
+};
+
+const server = http.createServer(requestHandler);
+
+// 启动服务
+startServer();
+
+const { exec } = require('child_process');
+
+const checkAndStartMediaMtx = () => {
+    exec('pgrep mediamtx', (error, stdout, stderr) => {
+        if (error) {
+            console.log('MediaMTX is not running, starting it...');
+            exec('mediamtx &', (err) => {
+                if (err) {
+                    console.error('Error starting MediaMTX:', err);
+                } else {
+                    console.log('MediaMTX started successfully.');
+                    startServer();
+                }
+            });
+        } else {
+            console.log('MediaMTX is already running.');
+            startServer();
+        }
+    });
+};
+
+// 在启动 HTTP 服务之前检查并启动 MediaMTX
+checkAndStartMediaMtx();
