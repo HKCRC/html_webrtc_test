@@ -1,36 +1,36 @@
 const streams = {
   main_up: {
-    whepUrl: "http://localhost:8889/testfile/whep",
+    whepUrl: "http://localhost:8889/MainViewTop/whep",
   },
   main_down: {
-    whepUrl: "http://localhost:8889/mainUrlDown/whep",
+    whepUrl: "http://localhost:8889/MainViewDown/whep",
   },
   car_down: {
-    whepUrl: "http://localhost:8889/carDownUrl/whep"
+    whepUrl: "http://localhost:8889/CV3DCCTV/whep"
   },
   left1: {
-    whepUrl: "http://localhost:8889/left1Url/whep",
+    whepUrl: "http://192.168.31.49:8088/whep",
   },
   left2: {
-    whepUrl: "http://localhost:8889/left2Url/whep",
+    whepUrl: "http://localhost:8889/unity4K/whep?v=4",
   },
   left3: {
-    whepUrl: "http://localhost:8889/left3Url/whep",
+    whepUrl: "http://localhost:8889/left3/whep",
   },
   center: {
-    whepUrl: "http://localhost:8889/centerUrl/whep",
+    whepUrl: "http://localhost:8889/center/whep",
   },
   center_lr: {
-    whepUrl: "http://localhost:8889/centerLRUrl/whep",
+    whepUrl: "http://localhost:8889/center_lr/whep",
   },
   right1: {
-    whepUrl: "http://localhost:8889/right1Url/whep",
+    whepUrl: "http://localhost:8889/right1/whep",
   },
   right2: {
-    whepUrl: "http://localhost:8889/right2Url/whep",
+    whepUrl: "http://localhost:8889/right2/whep",
   },
   right3: {
-    whepUrl: "http://localhost:8889/right3Url/whep",
+    whepUrl: "http://localhost:8889/right3/whep",
   },
 };
 
