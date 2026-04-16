@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>WebRTC Wall 6480x3840</title>
+    <title>WebRTC Wall - 双画面 8400x3840</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
@@ -12,92 +12,18 @@
         <section class="panel main-up" data-stream="main_up">
           <video autoplay muted playsinline></video>
           <div class="label">
-            <div class="name">主视角上部分 4K</div>
-            <div class="stream-url"></div>
+            <div class="name">主视角 4K</div>
+            <div class="stream-status">等待连接中...</div>
           </div>
         </section>
 
-        <section class="panel main-down" data-stream="main_down">
+        <section class="panel car-down" data-stream="car_down">
           <video autoplay muted playsinline></video>
           <div class="label">
-            <div class="name">主视角下部分 4K</div>
-            <div class="stream-url"></div>
+            <div class="name">小车向下视角 4K</div>
+            <div class="stream-status">等待连接中...</div>
           </div>
         </section>
-
-        <div class="panel-grid">
-          <section class="panel car-down" data-stream="car_down">
-            <video autoplay muted playsinline></video>
-            <div class="label">
-              <div class="name">小车向下视角 4K</div>
-              <div class="stream-url"></div>
-            </div>
-          </section>
-
-          <section class="panel left1" data-stream="left1">
-            <video autoplay muted playsinline></video>
-            <div class="label">
-              <div class="name">尾部视角 1080p</div>
-              <div class="stream-url"></div>
-            </div>
-          </section>
-
-          <section class="panel left2" data-stream="left2">
-            <video autoplay muted playsinline></video>
-            <div class="label">
-              <div class="name">第三视角 1080p</div>
-              <div class="stream-url"></div>
-            </div>
-          </section>
-
-          <section class="panel left3" data-stream="left3">
-            <video autoplay muted playsinline></video>
-            <div class="label">
-              <div class="name">驾驶舱 1080p</div>
-              <div class="stream-url"></div>
-            </div>
-          </section>
-
-          <section class="panel center" data-stream="center">
-            <video autoplay muted playsinline></video>
-            <div class="label">
-              <div class="name">原舱平视 1080p</div>
-              <div class="stream-url"></div>
-            </div>
-          </section>
-
-          <section class="panel center-lr" data-stream="center_lr">
-            <video autoplay muted playsinline></video>
-            <div class="label">
-              <div class="name">左侧视角 1080p</div>
-              <div class="stream-url"></div>
-            </div>
-          </section>
-
-          <section class="panel right1" data-stream="right1">
-            <video autoplay muted playsinline></video>
-            <div class="label">
-              <div class="name">小车卷扬机 1080p</div>
-              <div class="stream-url"></div>
-            </div>
-          </section>
-
-          <section class="panel right2" data-stream="right2">
-            <video autoplay muted playsinline></video>
-            <div class="label">
-              <div class="name">吊勾卷扬机 1080p</div>
-              <div class="stream-url"></div>
-            </div>
-          </section>
-
-          <section class="panel right3" data-stream="right3">
-            <video autoplay muted playsinline></video>
-            <div class="label">
-              <div class="name">小车向下复用 1080p</div>
-              <div class="stream-url"></div>
-            </div>
-          </section>
-        </div>
       </div>
     </div>
 

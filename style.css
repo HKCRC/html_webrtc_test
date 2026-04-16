@@ -35,23 +35,13 @@ body {
 
 .stage {
   width: 8400px;
-  height: 4320px;
+  height: 3840px;
   position: absolute;
   left: 0;
   top: 0;
   transform-origin: top left;
   will-change: transform;
   transform: translateZ(0);
-}
-
-.stage::before {
-  content: "";
-  position: absolute;
-  inset: 16px;
-  border-radius: 56px;
-  border: 2px solid rgba(27, 214, 194, 0.18);
-  box-shadow: 0 0 120px rgba(27, 214, 194, 0.2);
-  pointer-events: none;
 }
 
 .panel {
@@ -75,7 +65,8 @@ body {
 .panel video {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  display: block;
+  object-fit: fill;
   background: #060b0c;
   will-change: transform;
   transform: translateZ(0);
@@ -100,30 +91,20 @@ body {
   letter-spacing: 0.04em;
 }
 
-.label .stream-url {
+.label .stream-status {
   font-size: 20px;
   color: var(--muted);
   word-break: break-all;
+  font-weight: 500;
 }
 
+/* ── 双画面布局 ────────────────────────────────────────────────────────────── */
 .main-up {
   position: absolute;
-  left: 1080px;
+  left: 0;
   top: 0;
-  width: 4320px;
-  height: 2160px;
-}
-
-.main-down {
-  position: absolute;
-  left: 1080px;
-  top: 2160px;
-  width: 4320px;
-  height: 2160px;
-}
-
-.panel-grid {
-  display: contents;
+  width: 6480px;
+  height: 3840px;
 }
 
 .car-down {
@@ -131,39 +112,13 @@ body {
   left: 6480px;
   top: 0;
   width: 1920px;
-  height: 1080px;
+  height: 3840px;
 }
 
-.left1 {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 1080px;
-  height: 1280px;
-}
-
-.left2 {
-  position: absolute;
-  left: 0;
-  top: 1280px;
-  width: 1080px;
-  height: 1280px;
-}
-
-.left3 {
-  position: absolute;
-  left: 0;
-  top: 2560px;
-  width: 1080px;
-  height: 1280px;
-}
-
-.center-lr {
-  position: absolute;
-  left: 5400px;
-  top: 0;
-  width: 1080px;
-  height: 1280px;
+.car-down video {
+  width: 100% !important;
+  height: auto !important;
+  object-fit: contain !important;
 }
 
 .right1 {
@@ -180,11 +135,6 @@ body {
   top: 2560px;
   width: 1080px;
   height: 1280px;
-}
-
-.center,
-.right3 {
-  display: none;
 }
 
 @media (max-width: 2200px) {
