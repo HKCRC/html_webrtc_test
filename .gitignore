@@ -1,3 +1,4 @@
 mediamtx.yml
 # MediaMTX configuration file
 config.json
+node_modules/
