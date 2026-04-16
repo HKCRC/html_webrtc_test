@@ -1,0 +1,14 @@
+{
+  "mediamtx_path": "/home/craner/mediamtx_v1.16.2_linux_amd64/mediamtx",
+  "http_port": 8890,
+  "streams": {
+    "main_up": {
+      "whepUrl": "http://localhost:8889/MainViewTop/whep",
+      "name": "主视角上部分 4K"
+    },
+    "car_down": {
+      "whepUrl": "http://localhost:8889/CV3DCCTV/whep",
+      "name": "小车向下视角 4K"
+    }
+  }
+}
