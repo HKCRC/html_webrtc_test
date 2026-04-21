@@ -28,6 +28,74 @@ if (document.readyState === 'loading') {
   initApp();
 }
 
+// ── WebSocket客户端连接 ────────────────────────────────────────────────────
+const initWebSocket = () => {
+  // Electron使用file://协议，直接连接本地服务器
+  const wsUrl = 'ws://127.0.0.1:8887';
+
+  console.log('连接WebSocket:', wsUrl);
+
+  const ws = new WebSocket(wsUrl);
+
+  ws.onopen = () => {
+    console.log('✓ WebSocket已连接');
+  };
+
+  ws.onmessage = (event) => {
+    try {
+      const message = JSON.parse(event.data);
+      console.log('📨 WebSocket收到数据:', message);
+      if (message.type === 'update' && message.data) {
+        updateInfoDisplay(message.data);
+      }
+    } catch (error) {
+      console.error('WebSocket消息解析失败:', error);
+    }
+  };
+
+  ws.onerror = (error) => {
+    console.error('❌ WebSocket连接错误:', error);
+  };
+
+  ws.onclose = () => {
+    console.warn('WebSocket已断开，5秒后重新连接...');
+    setTimeout(initWebSocket, 5000);
+  };
+};
+
+// 更新页面上的信息显示
+const updateInfoDisplay = (data) => {
+  // data 格式: [回转角度, 变幅半径, 吊钩高度]
+  const rotation = data[0] !== undefined ? data[0] : 0;
+  const radius = data[1] !== undefined ? data[1] : 0;
+  const height = data[2] !== undefined ? data[2] : 0;
+
+  // 更新回转角度
+  const rotationNumber = document.querySelector('.info-group:nth-child(1) .number');
+  if (rotationNumber) {
+    rotationNumber.textContent = rotation.toFixed(2);
+  }
+
+  // 更新变幅半径
+  const radiusNumber = document.querySelector('.info-group:nth-child(2) .number');
+  if (radiusNumber) {
+    radiusNumber.textContent = radius.toFixed(2);
+  }
+
+  // 更新吊钩高度
+  const heightNumber = document.querySelector('.info-group:nth-child(3) .number');
+  if (heightNumber) {
+    heightNumber.textContent = height.toFixed(2);
+  }
+
+  console.log(`[数据更新] 回转角度: ${rotation.toFixed(2)}°, 变幅半径: ${radius.toFixed(2)}m, 吊钩高度: ${height.toFixed(2)}m`);
+};
+
+// 页面加载完成后初始化WebSocket
+document.addEventListener('DOMContentLoaded', () => {
+  initWebSocket();
+});
+
 
 const stage = document.getElementById("stage");
 const peers = new Map();

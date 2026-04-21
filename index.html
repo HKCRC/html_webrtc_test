@@ -9,7 +9,40 @@
   <body>
     <div class="viewport">
       <div class="stage" id="stage">
-        <img class="info-back up-info-back" src="asset/upInfoBack.png" alt="主视角背景" />
+        <img class="info-back up-info-back" src="asset/bottomInfoBack.png" alt="主视角背景" />
+        
+        <div class="info-content">
+          <div class="info-group">
+            <img class="info-icon" src="asset/zhixiang.png" alt="回转角度" />
+            <div class="info-text">
+              <div class="info-label">回转角度</div>
+              <div class="info-value">
+                <span class="number">0</span>
+                <span class="unit">°</span>
+              </div>
+            </div>
+          </div>
+          <div class="info-group">
+            <img class="info-icon" src="asset/banjin.png" alt="变幅半径" />
+            <div class="info-text">
+              <div class="info-label">变幅半径</div>
+              <div class="info-value">
+                <span class="number">52.2</span>
+                <span class="unit">m</span>
+              </div>
+            </div>
+          </div>
+          <div class="info-group">
+            <img class="info-icon" src="asset/gaodu.png" alt="吊钩高度" />
+            <div class="info-text">
+              <div class="info-label">吊钩高度</div>
+              <div class="info-value">
+                <span class="number">12.1</span>
+                <span class="unit">m</span>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <section class="panel main-up" data-stream="main_up">
           <video autoplay muted playsinline></video>
@@ -19,7 +52,41 @@
           </div>
         </section>
 
-        <img class="info-back down-info-back" src="asset/bottomInfoBack.png" alt="主视角底部背景" />
+        <div class="down-info-container" style="display: none;">
+          <img class="info-back down-info-back" src="asset/bottomInfoBack.png" alt="主视角底部背景" />
+          <div class="info-content">
+            <div class="info-group">
+              <img class="info-icon" src="asset/zhixiang.png" alt="回转角度" />
+              <div class="info-text">
+                <div class="info-label">回转角度</div>
+                <div class="info-value">
+                  <span class="number">0</span>
+                  <span class="unit">°</span>
+                </div>
+              </div>
+            </div>
+            <div class="info-group">
+              <img class="info-icon" src="asset/banjin.png" alt="变幅半径" />
+              <div class="info-text">
+                <div class="info-label">变幅半径</div>
+                <div class="info-value">
+                  <span class="number">52.2</span>
+                  <span class="unit">m</span>
+                </div>
+              </div>
+            </div>
+            <div class="info-group">
+              <img class="info-icon" src="asset/gaodu.png" alt="吊钩高度" />
+              <div class="info-text">
+                <div class="info-label">吊钩高度</div>
+                <div class="info-value">
+                  <span class="number">12.1</span>
+                  <span class="unit">m</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <section class="panel car-down" data-stream="car_down">
           <video autoplay muted playsinline></video>

@@ -141,21 +141,117 @@ body {
 .info-back {
   position: absolute;
   display: block;
-  width: 100%;
-  height: auto;
   object-fit: fill;
+  z-index: 999;
+  pointer-events: none;
 }
 
 .up-info-back {
-  left: 0;
-  top: -1200px;
-  width: 6480px;
+  left: 3240px;
+  top: 3640px;
+  width: 2160px;
+  height: 200px;
+  transform: translateX(-50%);
+}
+
+/* ── 上方信息条容器 ────────────────────────────────────────────────────────────── */
+.up-info-container {
+  position: absolute;
+  left: 3240px;
+  top: 3640px;
+  width: 2160px;
+  height: 200px;
+  z-index: 999;
+  transform: translateX(-50%);
 }
 
 .down-info-back {
+  position: absolute;
   left: 2160px;
-  top: 3840px;
+  top: 1920px;
   width: 2160px;
+  height: 200px;
+}
+
+/* ── 下方信息条容器 ────────────────────────────────────────────────────────────── */
+.down-info-container {
+  position: absolute;
+  left: 2160px;
+  top: 3640px;
+  width: 2160px;
+  height: 200px;
+  z-index: 100;
+}
+
+.info-content {
+  position: absolute;
+  left: 3240px;
+  top: 3640px;
+  width: 2160px;
+  height: 200px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 60px;
+  gap: 0;
+  z-index: 1000;
+  transform: translateX(-50%);
+}
+
+.info-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.info-icon {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.info-group:nth-child(1) .info-icon {
+  width: 96px;
+  height: 96px;
+}
+
+.info-text {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+
+.info-label {
+  font-size: 44px;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.info-value {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.info-value .number {
+  font-size: 56px;
+  font-weight: 700;
+  color: var(--text);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.info-value .unit {
+  font-size: 56px;
+  color: var(--text);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
 }
 
 @media (max-width: 2200px) {

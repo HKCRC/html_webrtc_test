@@ -1,6 +1,8 @@
 {
   "mediamtx_path": "/home/craner/mediamtx_v1.16.2_linux_amd64/mediamtx",
   "http_port": 8890,
+  "tcp_port": 13579,
+  "ws_port": 8887,
   "streams": {
     "main_up": {
       "whepUrl": "http://localhost:8889/MainViewTop/whep",
