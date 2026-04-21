@@ -67,10 +67,10 @@ const server = net.createServer((socket) => {
           throw new Error('数据必须是包含3个浮点数的数组');
         }
         
-        console.log('[TCP] JSON数组格式 - 解析后的数据:');
-        console.log('  回转角度:', parsedData[0], '°');
-        console.log('  变幅半径:', parsedData[1], 'm');
-        console.log('  吊钩高度:', parsedData[2], 'm');
+        // console.log('[TCP] JSON数组格式 - 解析后的数据:');
+        // console.log('  回转角度:', parsedData[0], '°');
+        // console.log('  变幅半径:', parsedData[1], 'm');
+        // console.log('  吊钩高度:', parsedData[2], 'm');
       } catch (jsonError) {
         // JSON解析失败，尝试二进制格式
         if (data.length === 12) { // 3个float，每个4字节
@@ -79,10 +79,10 @@ const server = net.createServer((socket) => {
             const value = data.readFloatLE(i * 4);
             parsedData.push(value);
           }
-          console.log('[TCP] 二进制格式 - 解析后的数据:');
-          console.log('  回转角度:', parsedData[0], '°');
-          console.log('  变幅半径:', parsedData[1], 'm');
-          console.log('  吊钩高度:', parsedData[2], 'm');
+          // console.log('[TCP] 二进制格式 - 解析后的数据:');
+          // console.log('  回转角度:', parsedData[0], '°');
+          // console.log('  变幅半径:', parsedData[1], 'm');
+          // console.log('  吊钩高度:', parsedData[2], 'm');
         } else {
           throw new Error('无法解析数据，必须是JSON数组或12字节的二进制数据(3个float)');
         }

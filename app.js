@@ -167,6 +167,20 @@ const updateRetryDelay = (whepUrl) => {
   logger.warn(`重试延迟更新: ${oldDelay}ms → ${state.delay}ms (重试: ${state.retryCount}/${RECONNECT_CONFIG.maxRetries})`);
 };
 
+const triggerReconnect = (whepUrl, panel, cfg, reason) => {
+  const state = getStreamState(whepUrl);
+  const logger = createLogger(whepUrl);
+
+  if (state.isReconnecting) {
+    logger.info(`已在重连中，忽略重复触发 (${reason})`);
+    return;
+  }
+
+  state.isConnected = false;
+  updateRetryDelay(whepUrl);
+  scheduleReconnect(whepUrl, panel, cfg);
+};
+
 const scheduleReconnect = (whepUrl, panel, cfg) => {
   const state = getStreamState(whepUrl);
   const logger = createLogger(whepUrl);
@@ -202,13 +216,10 @@ const scheduleReconnect = (whepUrl, panel, cfg) => {
   const timeoutId = setTimeout(async () => {
     logger.info(`开始第 ${state.retryCount} 次重连尝试...`);
     state.isReconnecting = false; // 在尝试前重置标志
-    try {
-      await attachStream(panel, cfg);
-      resetStreamState(whepUrl);
-    } catch (error) {
-      logger.error(`重连尝试失败: ${error.message}`);
-      updateRetryDelay(whepUrl);
-      scheduleReconnect(whepUrl, panel, cfg);
+    const success = await attachStream(panel, cfg);
+    if (!success) {
+      logger.warn(`第 ${state.retryCount} 次重连尝试未成功，继续重试`);
+      triggerReconnect(whepUrl, panel, cfg, "attempt-failed");
     }
   }, state.delay);
 
@@ -295,7 +306,7 @@ const attachStream = async (panel, cfg) => {
 
   if (!video || !whepUrl) {
     logger.error("缺少视频元素或 WHEP URL");
-    return;
+    return false;
   }
 
   logger.info("开始加载视频流...");
@@ -315,9 +326,14 @@ const attachStream = async (panel, cfg) => {
 
     // 监听连接状态变化，实现自动重连
     pc.addEventListener("connectionstatechange", () => {
+      // 旧连接被替换后可能继续派发事件，直接忽略
+      if (peers.get(whepUrl) !== pc) {
+        return;
+      }
+
       logger.info(`连接状态变化: ${pc.connectionState}`);
 
-      if (pc.connectionState === "connected" || pc.connectionState === "completed") {
+      if (pc.connectionState === "connected") {
         // 连接成功，重置重连状态
         logger.info("✓ 连接成功");
         resetStreamState(whepUrl);
@@ -326,28 +342,36 @@ const attachStream = async (panel, cfg) => {
         }
       } else if (
         pc.connectionState === "disconnected" ||
-        pc.connectionState === "failed"
+        pc.connectionState === "failed" ||
+        pc.connectionState === "closed"
       ) {
         // 连接断开或失败，启动重连
-        logger.warn(`连接已${pc.connectionState === "disconnected" ? "断开" : "失败"}，正在启动重连机制...`);
-        state.isConnected = false;
+        logger.warn(`连接状态异常(${pc.connectionState})，正在启动重连机制...`);
         if (statusLabel) {
           statusLabel.textContent = "重新连接中...";
         }
-        updateRetryDelay(whepUrl);
-        scheduleReconnect(whepUrl, panel, cfg);
+        triggerReconnect(whepUrl, panel, cfg, `pc-${pc.connectionState}`);
       }
     });
 
     // 监听 ICE 连接状态变化
     pc.addEventListener("iceconnectionstatechange", () => {
+      // 旧连接被替换后可能继续派发事件，直接忽略
+      if (peers.get(whepUrl) !== pc) {
+        return;
+      }
+
       const iceState = pc.iceConnectionState;
       if (iceState === "connected") {
         logger.info(`ICE 连接状态: ${iceState} ✓`);
       } else if (iceState === "checking" || iceState === "gathering") {
         logger.info(`ICE 连接状态: ${iceState}`);
-      } else if (iceState === "failed") {
-        logger.error(`ICE 连接失败`);
+      } else if (iceState === "failed" || iceState === "disconnected" || iceState === "closed") {
+        logger.error(`ICE 连接状态异常: ${iceState}`);
+        if (statusLabel) {
+          statusLabel.textContent = "重新连接中...";
+        }
+        triggerReconnect(whepUrl, panel, cfg, `ice-${iceState}`);
       } else {
         logger.warn(`ICE 连接状态: ${iceState}`);
       }
@@ -356,17 +380,16 @@ const attachStream = async (panel, cfg) => {
     if (statusLabel) {
       statusLabel.textContent = "连接中...";
     }
+    return true;
   } catch (error) {
     logger.error(`加载失败: ${error.message}`);
     if (statusLabel) {
       statusLabel.textContent = "加载失败";
     }
-    // 初始连接失败，启动重连机制
     const state = getStreamState(whepUrl);
     state.panel = panel;
     state.isConnected = false;
-    updateRetryDelay(whepUrl);
-    scheduleReconnect(whepUrl, panel, cfg);
+    return false;
   }
 };
 
